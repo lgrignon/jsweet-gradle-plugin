@@ -42,6 +42,7 @@ dependencies {
 
 	compile group: 'org.jsweet', name: 'jsweet-transpiler', version:'1.0.0-SNAPSHOT'
 	compile group: 'org.jsweet.candies', name: 'jsweet-core', version:'1.0.2-SNAPSHOT'
+	compile group: 'org.codehaus.plexus', name: 'plexus-utils', version:'3.0.20'
 }
 
 task sourceJar(type: Jar) { from sourceSets.main.allJava }
