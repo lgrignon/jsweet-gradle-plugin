@@ -1,0 +1,71 @@
+defaultTasks 'clean', 'check', 'assemble'
+
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+apply plugin: 'maven-publish-auth'
+
+group = 'org.jsweet'
+version = '1.0.0-SNAPSHOT'
+description = 'JSweet Gradle plugin'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
+
+buildscript {
+	dependencies {
+		classpath 'org.hibernate.build.gradle:gradle-maven-publish-auth:2.0.1'
+		classpath 'junit:junit:4.12'
+	}
+	repositories {
+		maven { url "http://repository.jboss.org/nexus/content/groups/public/" }
+		mavenLocal()
+		mavenCentral()
+	}
+}
+
+repositories {
+	mavenCentral()
+
+	maven { url "http://repository.jsweet.org/artifactory/libs-release-local" }
+	maven { url "http://repository.jsweet.org/artifactory/libs-snapshot-local" }
+	maven { url "http://google-diff-match-patch.googlecode.com/svn/trunk/maven" }
+}
+
+dependencies {
+
+	compile gradleApi()
+	compile localGroovy()
+
+	compile group: 'org.jsweet', name: 'jsweet-transpiler', version:'1.0.0-SNAPSHOT'
+	compile group: 'org.jsweet.candies', name: 'jsweet-core', version:'1.0.2-SNAPSHOT'
+}
+
+task sourceJar(type: Jar) { from sourceSets.main.allJava }
+
+publishing {
+	repositories {
+		maven {
+			name "jsweet-snapshots"
+			url "http://repository.jsweet.org/artifactory/plugins-${project.version.endsWith('-SNAPSHOT') ? 'snapshot' : 'release' }-local"
+		}
+	}
+	publications {
+		maven(MavenPublication) {
+			groupId = 'org.jsweet'
+
+			pom.withXml {
+				asNode().appendNode('description',
+						'Gradle plugin for JSweet')
+			}
+
+			from components.java
+
+			artifact sourceJar { classifier "sources" }
+		}
+	}
+}
+
