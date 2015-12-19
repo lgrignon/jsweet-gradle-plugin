@@ -93,7 +93,8 @@ public class JSweetTask extends ConventionTask {
 				new ConsoleTranspilationHandler());
 		try {
 
-			logInfo("encoding=" + configuration.getEncoding());
+			logInfo("encoding: " + configuration.getEncoding());
+			logInfo("classpath: " + classpath.getFiles());
 			logInfo("ts output dir: " + tsOutputDir);
 			logInfo("js output dir: " + jsOutputDir);
 			logInfo("bundle: " + configuration.isBundle());
