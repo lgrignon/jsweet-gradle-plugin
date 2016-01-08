@@ -26,6 +26,13 @@ Then apply the JSweet Gradle plugin, as usual:
 apply plugin: 'org.jsweet.jsweet-gradle-plugin'
 ```
 
+and optionally  disable java compilation (JSweet sources may not be considered as standard java sources):
+```groovy
+compileJava {
+	enabled = false
+}
+```
+
 Add your JSweet dependencies (candies):
 ```groovy
 
@@ -38,26 +45,17 @@ dependencies {
 }
 ```
 
-Enable the JSweet transpiler plugin for the preferred phase (here, generate-sources):
-```xml
-<plugin>
-	<groupId>org.jsweet</groupId>
-	<artifactId>jsweet-maven-plugin</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
-	<configuration>
-		<outDir>javascript</outDir>
-		<targetVersion>ES3</targetVersion>
-	</configuration>
-	<executions>
-		<execution>
-			<id>generate-js</id>
-			<phase>generate-sources</phase>
-			<goals>
-				<goal>jsweet</goal>
-			</goals>
-		</execution>
-	</executions>
-</plugin>
+Configure the JSweet plugin:
+```groovy
+jsweet {
+	verbose = true
+	encoding = 'UTF-8'
+	sourceMap = true
+	outDir = new File('target/js')
+	targetVersion = EcmaScriptComplianceLevel.ES3
+	includes = ['**/fr/test/my/**/*.java']
+}
+
 ```
 
 The configuration options of the plugin:
