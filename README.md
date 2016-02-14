@@ -62,21 +62,38 @@ The configuration options of the plugin:
 
 Name     |    Type       | Values | Default | Example
 -------- | ------------- | ------ | ------- | ------- 
-targetVersion | enum | ES3, ES5, ES6 | ES3 | ``` <targetVersion>ES3</targetVersion> ```
-module | enum | commonjs, amd, system, umd | none | ```<module>commonjs</module>```
-outDir | string | JS files output directory | .jsweet/js | ```<outDir>js</outDir>```
-tsOut | string | Temporary TypeScript output directory | .jsweet/ts | ```<tsOut>temp/ts</tsOut>```
-includes | string[] | Java source files to be included | N/A | ```<includes><include>**/*.java</include></includes>```
-excludes | string[] | Source files to be excluded | N/A | ```<excludes><exclude>**/lib/**</exclude></excludes>```
-bundle | boolean | Concats all JS file into one bundle | false |   ```<bundle>true</bundle>```
-bundlesDirectory | string | JS bundles output directory | N/A | ```<bundlesDirectory>js/dist</bundlesDirectory>```
-sourceMap | boolean | In-browser debug mode - true for java, typescript else | true | ```<javaDebug>true</javaDebug>```
-encoding | string | Java files encoding | UTF-8 | ```<encoding>ISO-8859-1</encoding>```
-noRootDirectories | boolean | output is relative to @jsweet.lang.Root package's directories | false | ```<noRootDirectories>true</noRootDirectories>```
-enableAssertions | boolean | assert are transpiled as JS check | false | ```<enableAssertions>true</enableAssertions>```
-verbose | boolean | Verbose transpiler output | false | ```<verbose>true</verbose>```
-jdkHome | string | Alternative JDK >= 8 directory, for instance if running Maven with a JRE | ${java.home} | ```<jdkHome>/opt/jdk8</jdkHome>```
+targetVersion | enum | ES3, ES5, ES6 | ES3 | ``` jsweet { targetVersion = EcmaScriptComplianceLevel.ES3 } ```
+module | enum | commonjs, amd, system, umd | none | ``` jsweet { module = ModuleKind.commonjs } ```
+outDir | File | JS files output directory | .jsweet/js | ```jsweet { outDir = new File('target/js') }```
+tsOut | File | Temporary TypeScript output directory | .jsweet/ts | ```jsweet { tsOut = new File('target/ts') }```
+includes | string[] | Java source files to be included | N/A | ```jsweet { includes = ['**/org/jsweet/examples/**/*.java', '**/other/*] }```
+excludes | string[] | Source files to be excluded | N/A | ```jsweet { excludes = ['**/excluded/**/*.java'] }```
+bundle | boolean | Concats all JS file into one bundle | false |   ```jsweet { bundle = true }```
+bundlesDirectory | File | JS bundles output directory | N/A | ```jsweet { bundlesDirectory = new File('target/js/bundles') }```
+sourceMap | boolean | In-browser debug mode - true for java, typescript else | true | ```jsweet { javaDebug = true }```
+encoding | string | Java files encoding | UTF-8 | ```jsweet { encoding = 'UTF-8' }```
+noRootDirectories | boolean | output is relative to @jsweet.lang.Root package's directories | false | ```jsweet { noRootDirectories = true }```
+enableAssertions | boolean | assert are transpiled as JS check | false | ```jsweet { enableAssertions = true }```
+verbose | boolean | Verbose transpiler output | false | ```jsweet { verbose = true }```
+jdkHome | File | Alternative JDK >= 8 directory, for instance if running Maven with a JRE | ${java.home} | ```jsweet { jdkHome = new File('/opt/jdk8') }```
+declaration | boolean | Generates TypeScript d.ts | false | ```jsweet { declaration = true }```
+dtsOut | File | TypeScript d.ts output directory when the declaration option is true | outDir | ```jsweet { dtsOut = new File('typings') }```
+candiesJsOut | File | Directory where to extract candies' Javascript |  | ```candiesJsOut { jdkHome = new File('www/js/candies') }```
 
+jsweet { verbose = true }
+
+jsweet { sourceMap = true }
+
+jsweet { excludes = ['**/excluded/**/*.java'] }
+jsweet { module = ModuleKind.commonjs }
+jsweet { module = ModuleKind.commonjs }
+
+	
+	sourceMap = true
+	
+	targetVersion = EcmaScriptComplianceLevel.ES3
+	includes = ['**/org/jsweet/examples/**/*.java']
+}
 
 Then, just invoke the JSweet gradle task:
 

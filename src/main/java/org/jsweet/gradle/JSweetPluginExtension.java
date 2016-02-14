@@ -131,12 +131,36 @@ public class JSweetPluginExtension {
 		this.verbose = verbose;
 	}
 
-	public String getJdkHome() {
+	public File getJdkHome() {
 		return jdkHome;
 	}
 
-	public void setJdkHome(String jdkHome) {
+	public void setJdkHome(File jdkHome) {
 		this.jdkHome = jdkHome;
+	}
+
+	public boolean isDeclaration() {
+		return declaration;
+	}
+
+	public void setDeclaration(boolean declaration) {
+		this.declaration = declaration;
+	}
+
+	public File getDtsOut() {
+		return dtsOut;
+	}
+
+	public void setDtsOut(File dtsOut) {
+		this.dtsOut = dtsOut;
+	}
+
+	public File getCandiesJsOut() {
+		return candiesJsOut;
+	}
+
+	public void setCandiesJsOut(File candiesJsOut) {
+		this.candiesJsOut = candiesJsOut;
 	}
 
 	private EcmaScriptComplianceLevel targetVersion = EcmaScriptComplianceLevel.ES3;
@@ -157,6 +181,9 @@ public class JSweetPluginExtension {
 
 	private boolean verbose = false;
 
-	private String jdkHome = null;
+	private File jdkHome = null;
 
+	private boolean declaration;
+	private File dtsOut;
+	private File candiesJsOut;
 }

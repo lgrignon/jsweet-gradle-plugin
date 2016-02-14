@@ -15,8 +15,6 @@
  */
 package org.jsweet.gradle;
 
-import static org.apache.commons.lang3.StringUtils.isBlank;
-
 import java.io.File;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -64,12 +62,12 @@ public class JSweetTask extends ConventionTask {
 			LogManager.getLogger("org.jsweet").setLevel(Level.ALL);
 		}
 
-		String jdkHome = configuration.getJdkHome();
-		if (isBlank(jdkHome)) {
-			jdkHome = System.getProperty("java.home");
+		File jdkHome = configuration.getJdkHome();
+		if (jdkHome == null) {
+			jdkHome = new File(System.getProperty("java.home"));
 		}
 
-		JSweetConfig.initClassPath(jdkHome);
+		JSweetConfig.initClassPath(jdkHome.getAbsolutePath());
 
 		File tsOutputDir = configuration.getTsOut();
 		if (tsOutputDir == null) {
@@ -97,6 +95,11 @@ public class JSweetTask extends ConventionTask {
 			logInfo("classpath: " + classpath.getFiles());
 			logInfo("ts output dir: " + tsOutputDir);
 			logInfo("js output dir: " + jsOutputDir);
+
+			logInfo("declarations: " + configuration.isDeclaration());
+			logInfo("declarationOutDir: " + configuration.getDtsOut());
+			logInfo("candiesJsOutDir: " + configuration.getCandiesJsOut());
+
 			logInfo("bundle: " + configuration.isBundle());
 			if (bundlesDirectory != null) {
 				logInfo("bundles directory: " + bundlesDirectory);
@@ -108,7 +111,8 @@ public class JSweetTask extends ConventionTask {
 
 			SourceFile[] sourceFiles = collectSourceFiles();
 
-			JSweetTranspiler transpiler = new JSweetTranspiler(tsOutputDir, jsOutputDir, classpath.getAsPath());
+			JSweetTranspiler transpiler = new JSweetTranspiler(tsOutputDir, jsOutputDir,
+					configuration.getCandiesJsOut(), classpath.getAsPath());
 
 			transpiler.setTscWatchMode(false);
 			transpiler.setEcmaTargetVersion(configuration.getTargetVersion());
@@ -120,6 +124,9 @@ public class JSweetTask extends ConventionTask {
 			transpiler.setEncoding(configuration.getEncoding());
 			transpiler.setNoRootDirectories(configuration.isNoRootDirectories());
 			transpiler.setIgnoreAssertions(!configuration.isEnableAssertions());
+
+			transpiler.setGenerateDeclarations(configuration.isDeclaration());
+			transpiler.setDeclarationsOutputDir(configuration.getDtsOut());
 
 			transpiler.transpile(transpilationHandler, sourceFiles);
 		} catch (NoClassDefFoundError e) {
