@@ -80,23 +80,12 @@ declaration | boolean | Generates TypeScript d.ts | false | ```jsweet { declarat
 dtsOut | File | TypeScript d.ts output directory when the declaration option is true | outDir | ```jsweet { dtsOut = new File('typings') }```
 candiesJsOut | File | Directory where to extract candies' Javascript |  | ```candiesJsOut { jdkHome = new File('www/js/candies') }```
 
-jsweet { verbose = true }
-
-jsweet { sourceMap = true }
-
-jsweet { excludes = ['**/excluded/**/*.java'] }
-jsweet { module = ModuleKind.commonjs }
-jsweet { module = ModuleKind.commonjs }
-
-	
-	sourceMap = true
-	
-	targetVersion = EcmaScriptComplianceLevel.ES3
-	includes = ['**/org/jsweet/examples/**/*.java']
-}
-
-Then, just invoke the JSweet gradle task:
+Then, just invoke one of the JSweet gradle task:
 
 ```
 $ gradle jsweet
+```
+
+```
+$ gradle jsweetClean
 ```
