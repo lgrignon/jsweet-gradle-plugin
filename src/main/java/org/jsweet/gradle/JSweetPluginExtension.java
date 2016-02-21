@@ -165,8 +165,8 @@ public class JSweetPluginExtension {
 
 	private EcmaScriptComplianceLevel targetVersion = EcmaScriptComplianceLevel.ES3;
 	private ModuleKind module = ModuleKind.none;
-	private File outDir = null;
-	private File tsOut = null;
+	private File outDir = new File("js");
+	private File tsOut = new File(".ts");
 	private String[] includes = null;
 	private String[] excludes = null;
 	private boolean bundle = false;

@@ -23,11 +23,9 @@ import java.util.List;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 import org.codehaus.plexus.util.DirectoryScanner;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
-import org.gradle.api.internal.ConventionTask;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.TaskAction;
 import org.jsweet.JSweetConfig;
@@ -43,16 +41,13 @@ import org.jsweet.transpiler.util.ErrorCountTranspilationHandler;
  * @author Louis Grignon
  *
  */
-public class JSweetTask extends ConventionTask {
+public class JSweetTranspileTask extends AbstractJSweetTask {
 
-	private static final Logger logger = Logger.getLogger(JSweetTask.class);
-
-	public JSweetTask() {
+	public JSweetTranspileTask() {
 		dependsOn(JavaPlugin.CLASSES_TASK_NAME);
 		setGroup("generate");
 	}
 
-	private JSweetPluginExtension configuration;
 	private SourceDirectorySet sources;
 	private FileCollection classpath;
 
@@ -181,14 +176,6 @@ public class JSweetTask extends ConventionTask {
 		return sources.toArray(new SourceFile[0]);
 	}
 
-	public JSweetPluginExtension getConfiguration() {
-		return configuration;
-	}
-
-	public void setConfiguration(JSweetPluginExtension configuration) {
-		this.configuration = configuration;
-	}
-
 	public SourceDirectorySet getSources() {
 		return sources;
 	}
@@ -203,11 +190,5 @@ public class JSweetTask extends ConventionTask {
 
 	public void setClasspath(FileCollection classpath) {
 		this.classpath = classpath;
-	}
-
-	private void logInfo(String content) {
-		if (configuration.isVerbose()) {
-			logger.info(content);
-		}
 	}
 }

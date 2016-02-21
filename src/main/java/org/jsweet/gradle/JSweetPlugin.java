@@ -48,9 +48,12 @@ public class JSweetPlugin implements Plugin<Project> {
 		SourceSetContainer sourceSets = javaPluginConvention.getSourceSets();
 		SourceSet mainSources = sourceSets.getByName(SourceSet.MAIN_SOURCE_SET_NAME);
 
-		JSweetTask task = project.getTasks().create("jsweet", JSweetTask.class);
+		JSweetTranspileTask task = project.getTasks().create("jsweet", JSweetTranspileTask.class);
 		task.setConfiguration(extension);
 		task.setSources(mainSources.getAllJava());
 		task.setClasspath(mainSources.getCompileClasspath());
+		
+		JSweetCleanTask cleanTask = project.getTasks().create("jsweetClean", JSweetCleanTask.class);
+		cleanTask.setConfiguration(extension);
 	}
 }
