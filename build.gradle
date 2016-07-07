@@ -50,6 +50,10 @@ task sourceJar(type: Jar) { from sourceSets.main.allJava }
 publishing {
 	repositories {
 		maven {
+			credentials {
+        		username "$mavenUser"
+        		password "$mavenPassword"
+	        }
 			name "jsweet-snapshots"
 			url "http://jsweet.org:8081/artifactory/plugins-${project.version.endsWith('-SNAPSHOT') ? 'snapshot' : 'release' }-local"
 		}
