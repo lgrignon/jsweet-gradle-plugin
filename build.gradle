@@ -51,12 +51,13 @@ publishing {
 	repositories {
 		maven {
 			name "jsweet-snapshots"
-			url "http://repository.jsweet.org/artifactory/plugins-${project.version.endsWith('-SNAPSHOT') ? 'snapshot' : 'release' }-local"
+			url "http://jsweet.org:8081/artifactory/plugins-${project.version.endsWith('-SNAPSHOT') ? 'snapshot' : 'release' }-local"
 		}
 	}
 	publications {
 		maven(MavenPublication) {
 			groupId = 'org.jsweet'
+			artifactId = 'jsweet-gradle-plugin'
 
 			pom.withXml {
 				asNode().appendNode('description',
