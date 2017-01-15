@@ -7,7 +7,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'maven-publish-auth'
 
 group = 'org.jsweet'
-version = '1.2.0-SNAPSHOT'
+version = '1.2.1-SNAPSHOT'
 description = 'JSweet Gradle plugin'
 
 sourceCompatibility = 1.8
@@ -75,5 +75,5 @@ publishing {
 	}
 }
 task wrapper(type: Wrapper) {
-	gradleVersion = '2.10'
+	gradleVersion = '3.3'
 }
