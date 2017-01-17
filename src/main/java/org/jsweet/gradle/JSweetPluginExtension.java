@@ -59,6 +59,14 @@ public class JSweetPluginExtension {
 		this.tsOut = tsOut;
 	}
 
+	public boolean isTsOnly() {
+		return tsOnly;
+	}
+	
+	public void setTsOnly(boolean tsOnly) {
+		this.tsOnly = tsOnly;
+	}
+	
 	public String[] getIncludes() {
 		return includes;
 	}
@@ -97,6 +105,14 @@ public class JSweetPluginExtension {
 
 	public void setSourceMap(boolean sourceMaps) {
 		this.sourceMap = sourceMaps;
+	}
+	
+	public File getSourceRoot() {
+		return sourceRoot;
+	}
+	
+	public void setSourceRoot(File sourceRoot) {
+		this.sourceRoot = sourceRoot;
 	}
 
 	public String getEncoding() {
@@ -163,16 +179,34 @@ public class JSweetPluginExtension {
 		this.candiesJsOut = candiesJsOut;
 	}
 
+	public boolean isDefinitions() {
+		return definitions;
+	}
+	
+	public void setDefinitions(boolean definitions) {
+		this.definitions = definitions;
+	}
+	
+	public boolean isDisableJavaAddons() {
+		return disableJavaAddons;
+	}
+	
+	public void setDisableJavaAddons(boolean disableJavaAddons) {
+		this.disableJavaAddons = disableJavaAddons;
+	}
+	
 	private EcmaScriptComplianceLevel targetVersion = EcmaScriptComplianceLevel.ES3;
 	private ModuleKind module = ModuleKind.none;
 	private File outDir = new File("js");
 	private File tsOut = new File(".ts");
+	private boolean tsOnly = false;
 	private String[] includes = null;
 	private String[] excludes = null;
 	private boolean bundle = false;
 	private File bundlesDirectory = null;
 
 	private boolean sourceMap = false;
+	private File sourceRoot = null;
 	private String encoding = "UTF-8";
 
 	private boolean noRootDirectories = false;
@@ -186,4 +220,6 @@ public class JSweetPluginExtension {
 	private boolean declaration;
 	private File dtsOut;
 	private File candiesJsOut;
+	private boolean definitions=true;
+	private boolean disableJavaAddons=false;
 }

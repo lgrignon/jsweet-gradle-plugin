@@ -15,7 +15,7 @@ buildscript {
 		maven { url "http://google-diff-match-patch.googlecode.com/svn/trunk/maven" }
 	}
 	dependencies {
-		classpath('org.jsweet:jsweet-gradle-plugin:1.0.0-SNAPSHOT') { //
+		classpath('org.jsweet:jsweet-gradle-plugin:1.2.1-SNAPSHOT') { //
 			transitive = true }
 	}
 }
@@ -52,7 +52,7 @@ jsweet {
 	encoding = 'UTF-8'
 	sourceMap = true
 	outDir = new File('target/js')
-	targetVersion = EcmaScriptComplianceLevel.ES3
+	targetVersion = 'ES3'
 	includes = ['**/fr/test/my/**/*.java']
 }
 
@@ -66,11 +66,13 @@ targetVersion | enum | ES3, ES5, ES6 | ES3 | ``` jsweet { targetVersion = EcmaSc
 module | enum | commonjs, amd, system, umd | none | ``` jsweet { module = ModuleKind.commonjs } ```
 outDir | File | JS files output directory | .jsweet/js | ```jsweet { outDir = new File('target/js') }```
 tsOut | File | Temporary TypeScript output directory | .jsweet/ts | ```jsweet { tsOut = new File('target/ts') }```
+tsOnly | boolean | If true, JSweet will not generate any JavaScript | false | ```jsweet { tsOnly = true }```
 includes | string[] | Java source files to be included | N/A | ```jsweet { includes = ['**/org/jsweet/examples/**/*.java', '**/other/*] }```
 excludes | string[] | Source files to be excluded | N/A | ```jsweet { excludes = ['**/excluded/**/*.java'] }```
 bundle | boolean | Concats all JS file into one bundle | false |   ```jsweet { bundle = true }```
 bundlesDirectory | File | JS bundles output directory | N/A | ```jsweet { bundlesDirectory = new File('target/js/bundles') }```
 sourceMap | boolean | In-browser debug mode - true for java, typescript else | true | ```jsweet { javaDebug = true }```
+sourceRoot | string | The location where debugger should locate Java files instead of source locations | N/A | ```jsweet { sourceRoot = new File('src') }```
 encoding | string | Java files encoding | UTF-8 | ```jsweet { encoding = 'UTF-8' }```
 noRootDirectories | boolean | output is relative to @jsweet.lang.Root package's directories | false | ```jsweet { noRootDirectories = true }```
 enableAssertions | boolean | assert are transpiled as JS check | false | ```jsweet { enableAssertions = true }```
@@ -79,6 +81,9 @@ jdkHome | File | Alternative JDK >= 8 directory, for instance if running Maven w
 declaration | boolean | Generates TypeScript d.ts | false | ```jsweet { declaration = true }```
 dtsOut | File | TypeScript d.ts output directory when the declaration option is true | outDir | ```jsweet { dtsOut = new File('typings') }```
 candiesJsOut | File | Directory where to extract candies' Javascript |  | ```candiesJsOut { jdkHome = new File('www/js/candies') }```
+definitions | boolean | Generates definitions from def.* packages in d.ts definition files, in the tsOut directory (do not confuse with the 'declaration' option) | true | ```jsweet { definitions = true }```
+disableJavaAddons | boolean | Disables Java-specific code generation behavior (for advanced users only) | false | ```jsweet { disableJavaAddons = true }```
+
 
 Then, just invoke one of the JSweet gradle task:
 
