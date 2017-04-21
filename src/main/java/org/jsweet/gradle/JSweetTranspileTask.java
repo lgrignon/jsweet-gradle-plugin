@@ -29,6 +29,7 @@ import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.TaskAction;
 import org.jsweet.JSweetConfig;
+import org.jsweet.transpiler.JSweetFactory;
 import org.jsweet.transpiler.JSweetProblem;
 import org.jsweet.transpiler.JSweetTranspiler;
 import org.jsweet.transpiler.SourceFile;
@@ -76,12 +77,6 @@ public class JSweetTranspileTask extends AbstractJSweetTask {
 		}
 		jsOutputDir.mkdirs();
 
-		File bundlesDirectory = null;
-		if (configuration.getBundlesDirectory() != null) {
-			bundlesDirectory = configuration.getBundlesDirectory();
-			bundlesDirectory.getParentFile().mkdirs();
-		}
-
 		ErrorCountTranspilationHandler transpilationHandler = new ErrorCountTranspilationHandler(
 				new ConsoleTranspilationHandler());
 		try {
@@ -91,36 +86,53 @@ public class JSweetTranspileTask extends AbstractJSweetTask {
 			logInfo("ts output dir: " + tsOutputDir);
 			logInfo("js output dir: " + jsOutputDir);
 
-			logInfo("ts only: "+configuration.isTsOnly());
+			logInfo("ts only: " + configuration.isTsOnly());
 			logInfo("declarations: " + configuration.isDeclaration());
 			logInfo("declarationOutDir: " + configuration.getDtsOut());
 			logInfo("candiesJsOutDir: " + configuration.getCandiesJsOut());
 
 			logInfo("bundle: " + configuration.isBundle());
-			if (bundlesDirectory != null) {
-				logInfo("bundles directory: " + bundlesDirectory);
-			}
 			logInfo("ecmaTargetVersion: " + configuration.getTargetVersion());
 			logInfo("moduleKind: " + configuration.getModule());
 			logInfo("sourceMaps: " + configuration.isSourceMap());
-			logInfo("SourceRoot: "+configuration.getSourceRoot());
+			logInfo("SourceRoot: " + configuration.getSourceRoot());
 			logInfo("jdkHome: " + jdkHome);
-			logInfo("definitions: "+configuration.isDefinitions());
-			logInfo("disableJavaAddons: "+configuration.isDisableJavaAddons());
-			
+			logInfo("definitions: " + configuration.isDefinitions());
+			logInfo("disableJavaAddons: " + configuration.isDisableJavaAddons());
+			logInfo("factoryClassName: " + configuration.getFactoryClassName());
+
+			JSweetFactory factory = null;
+			if (configuration.getFactoryClassName() != null) {
+				try {
+					factory = (JSweetFactory) Thread.currentThread().getContextClassLoader()
+							.loadClass(configuration.getFactoryClassName()).newInstance();
+				} catch (Exception e) {
+					try {
+						// try forName just in case
+						factory = (JSweetFactory) Class.forName(configuration.getFactoryClassName()).newInstance();
+					} catch (Exception e2) {
+						throw new Exception(
+								"cannot find or instantiate factory class: " + configuration.getFactoryClassName()
+										+ " (make sure the class is in the plugin's classpath and that it defines an empty public constructor)",
+								e2);
+					}
+				}
+			}
+			if (factory == null) {
+				factory = new JSweetFactory();
+			}
+
 			SourceFile[] sourceFiles = collectSourceFiles();
 
-			JSweetTranspiler transpiler = new JSweetTranspiler(tsOutputDir, jsOutputDir,
+			JSweetTranspiler transpiler = new JSweetTranspiler(factory, tsOutputDir, jsOutputDir,
 					configuration.getCandiesJsOut(), classpath.getAsPath());
 
 			transpiler.setTscWatchMode(false);
-			transpiler.setGenerateJsFiles(!configuration.isTsOnly());
 			transpiler.setEcmaTargetVersion(configuration.getTargetVersion());
 			transpiler.setModuleKind(configuration.getModule());
 			transpiler.setBundle(configuration.isBundle());
-			transpiler.setBundlesDirectory(bundlesDirectory);
 			transpiler.setPreserveSourceLineNumbers(configuration.isSourceMap());
-			if(configuration.getSourceRoot() != null) {
+			if (configuration.getSourceRoot() != null) {
 				transpiler.setSourceRoot(configuration.getSourceRoot());
 			}
 
@@ -131,9 +143,14 @@ public class JSweetTranspileTask extends AbstractJSweetTask {
 			transpiler.setGenerateDeclarations(configuration.isDeclaration());
 			transpiler.setDeclarationsOutputDir(configuration.getDtsOut());
 			transpiler.setGenerateDefinitions(configuration.isDefinitions());
+			
 			transpiler.setInterfaceTracking(!configuration.isDisableJavaAddons());
 			transpiler.setSupportGetClass(!configuration.isDisableJavaAddons());
 			transpiler.setSupportSaticLazyInitialization(!configuration.isDisableJavaAddons());
+			
+			transpiler.setGenerateJsFiles(!configuration.isTsOnly());
+			transpiler.setIgnoreTypeScriptErrors(configuration.isIgnoreTypeScriptErrors());
+			transpiler.setHeaderFile(configuration.getHeader());
 
 			transpiler.transpile(transpilationHandler, sourceFiles);
 		} catch (NoClassDefFoundError e) {

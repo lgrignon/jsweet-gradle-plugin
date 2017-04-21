@@ -62,11 +62,11 @@ public class JSweetPluginExtension {
 	public boolean isTsOnly() {
 		return tsOnly;
 	}
-	
+
 	public void setTsOnly(boolean tsOnly) {
 		this.tsOnly = tsOnly;
 	}
-	
+
 	public String[] getIncludes() {
 		return includes;
 	}
@@ -91,14 +91,6 @@ public class JSweetPluginExtension {
 		this.bundle = bundle;
 	}
 
-	public File getBundlesDirectory() {
-		return bundlesDirectory;
-	}
-
-	public void setBundlesDirectory(File bundlesDirectory) {
-		this.bundlesDirectory = bundlesDirectory;
-	}
-
 	public boolean isSourceMap() {
 		return sourceMap;
 	}
@@ -106,11 +98,11 @@ public class JSweetPluginExtension {
 	public void setSourceMap(boolean sourceMaps) {
 		this.sourceMap = sourceMaps;
 	}
-	
+
 	public File getSourceRoot() {
 		return sourceRoot;
 	}
-	
+
 	public void setSourceRoot(File sourceRoot) {
 		this.sourceRoot = sourceRoot;
 	}
@@ -182,19 +174,43 @@ public class JSweetPluginExtension {
 	public boolean isDefinitions() {
 		return definitions;
 	}
-	
+
 	public void setDefinitions(boolean definitions) {
 		this.definitions = definitions;
 	}
-	
+
 	public boolean isDisableJavaAddons() {
 		return disableJavaAddons;
 	}
-	
+
 	public void setDisableJavaAddons(boolean disableJavaAddons) {
 		this.disableJavaAddons = disableJavaAddons;
 	}
-	
+
+	public String getFactoryClassName() {
+		return factoryClassName;
+	}
+
+	public void setFactoryClassName(String factoryClassName) {
+		this.factoryClassName = factoryClassName;
+	}
+
+	public boolean isIgnoreTypeScriptErrors() {
+		return ignoreTypeScriptErrors;
+	}
+
+	public void setIgnoreTypeScriptErrors(boolean ignoreTypeScriptErrors) {
+		this.ignoreTypeScriptErrors = ignoreTypeScriptErrors;
+	}
+
+	public File getHeader() {
+		return header;
+	}
+
+	public void setHeader(File header) {
+		this.header = header;
+	}
+
 	private EcmaScriptComplianceLevel targetVersion = EcmaScriptComplianceLevel.ES3;
 	private ModuleKind module = ModuleKind.none;
 	private File outDir = new File("js");
@@ -203,7 +219,6 @@ public class JSweetPluginExtension {
 	private String[] includes = null;
 	private String[] excludes = null;
 	private boolean bundle = false;
-	private File bundlesDirectory = null;
 
 	private boolean sourceMap = false;
 	private File sourceRoot = null;
@@ -220,6 +235,10 @@ public class JSweetPluginExtension {
 	private boolean declaration;
 	private File dtsOut;
 	private File candiesJsOut;
-	private boolean definitions=true;
-	private boolean disableJavaAddons=false;
+	private boolean definitions = true;
+	private boolean disableJavaAddons = false;
+	private String factoryClassName;
+
+	protected boolean ignoreTypeScriptErrors;
+	protected File header;
 }
