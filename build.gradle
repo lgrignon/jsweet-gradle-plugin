@@ -41,7 +41,7 @@ dependencies {
 	compile localGroovy()
 
 	compile group: 'org.jsweet', name: 'jsweet-transpiler', version:'2.0.0-SNAPSHOT'
-	compile group: 'org.jsweet', name: 'jsweet-core', version:'5.0-SNAPSHOT'
+	compile group: 'org.jsweet', name: 'jsweet-core', version:'5-SNAPSHOT'
 	compile group: 'org.codehaus.plexus', name: 'plexus-utils', version:'3.0.20'
 }
 
