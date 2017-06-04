@@ -67,13 +67,13 @@ public class JSweetTranspileTask extends AbstractJSweetTask {
 
 		File tsOutputDir = configuration.getTsOut();
 		if (tsOutputDir == null) {
-			tsOutputDir = new File(".ts");
+			tsOutputDir = new File("target/.ts");
 		}
 		tsOutputDir.mkdirs();
 
 		File jsOutputDir = configuration.getOutDir();
 		if (jsOutputDir == null) {
-			jsOutputDir = new File("js");
+			jsOutputDir = new File("target/js");
 		}
 		jsOutputDir.mkdirs();
 
@@ -98,7 +98,7 @@ public class JSweetTranspileTask extends AbstractJSweetTask {
 			logInfo("SourceRoot: " + configuration.getSourceRoot());
 			logInfo("jdkHome: " + jdkHome);
 			logInfo("definitions: " + configuration.isDefinitions());
-			logInfo("disableJavaAddons: " + configuration.isDisableJavaAddons());
+			logInfo("disableSinglePrecisionFloats: " + configuration.isDisableSinglePrecisionFloats());
 			logInfo("factoryClassName: " + configuration.getFactoryClassName());
 
 			JSweetFactory factory = null;
@@ -144,14 +144,12 @@ public class JSweetTranspileTask extends AbstractJSweetTask {
 			transpiler.setDeclarationsOutputDir(configuration.getDtsOut());
 			transpiler.setGenerateDefinitions(configuration.isDefinitions());
 			
-			transpiler.setInterfaceTracking(!configuration.isDisableJavaAddons());
-			transpiler.setSupportGetClass(!configuration.isDisableJavaAddons());
-			transpiler.setSupportSaticLazyInitialization(!configuration.isDisableJavaAddons());
-			
 			transpiler.setGenerateJsFiles(!configuration.isTsOnly());
 			transpiler.setIgnoreTypeScriptErrors(configuration.isIgnoreTypeScriptErrors());
 			transpiler.setHeaderFile(configuration.getHeader());
 
+			transpiler.setDisableSinglePrecisionFloats(configuration.isDisableSinglePrecisionFloats());
+			
 			transpiler.transpile(transpilationHandler, sourceFiles);
 		} catch (NoClassDefFoundError e) {
 			if (configuration.isVerbose()) {

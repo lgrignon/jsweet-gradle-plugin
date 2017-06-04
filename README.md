@@ -71,3 +71,8 @@ $ gradle jsweet
 ```
 $ gradle jsweetClean
 ```
+
+## Deploy the plugin
+```
+gradlew publish
+```

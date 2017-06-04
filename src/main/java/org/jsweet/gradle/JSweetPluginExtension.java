@@ -179,12 +179,12 @@ public class JSweetPluginExtension {
 		this.definitions = definitions;
 	}
 
-	public boolean isDisableJavaAddons() {
-		return disableJavaAddons;
+	public boolean isDisableSinglePrecisionFloats() {
+		return disableSinglePrecisionFloats;
 	}
 
-	public void setDisableJavaAddons(boolean disableJavaAddons) {
-		this.disableJavaAddons = disableJavaAddons;
+	public void setDisableSinglePrecisionFloats(boolean disableSinglePrecisionFloats) {
+		this.disableSinglePrecisionFloats = disableSinglePrecisionFloats;
 	}
 
 	public String getFactoryClassName() {
@@ -213,8 +213,8 @@ public class JSweetPluginExtension {
 
 	private EcmaScriptComplianceLevel targetVersion = EcmaScriptComplianceLevel.ES3;
 	private ModuleKind module = ModuleKind.none;
-	private File outDir = new File("js");
-	private File tsOut = new File(".ts");
+	private File outDir;
+	private File tsOut;
 	private boolean tsOnly = false;
 	private String[] includes = null;
 	private String[] excludes = null;
@@ -236,7 +236,7 @@ public class JSweetPluginExtension {
 	private File dtsOut;
 	private File candiesJsOut;
 	private boolean definitions = true;
-	private boolean disableJavaAddons = false;
+	private boolean disableSinglePrecisionFloats = false;
 	private String factoryClassName;
 
 	protected boolean ignoreTypeScriptErrors;
