@@ -51,7 +51,7 @@ jsweet {
 	verbose = true
 	encoding = 'UTF-8'
 	sourceMap = true
-	outDir = new File('target/js')
+	outDir = new File('target/javascript')
 	targetVersion = 'ES3'
 	includes = ['**/fr/test/my/**/*.java']
 }
@@ -76,3 +76,4 @@ $ gradle jsweetClean
 ```
 gradlew publish
 ```
+
