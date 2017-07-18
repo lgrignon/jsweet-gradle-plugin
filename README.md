@@ -52,6 +52,7 @@ jsweet {
 	encoding = 'UTF-8'
 	sourceMap = true
 	outDir = new File('target/javascript')
+	candiesJsOut = new File('target/candies')
 	targetVersion = 'ES3'
 	includes = ['**/fr/test/my/**/*.java']
 }
