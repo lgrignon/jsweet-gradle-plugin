@@ -73,8 +73,11 @@ $ gradle jsweet
 $ gradle jsweetClean
 ```
 
-## Deploy the plugin
+## Deploy the plugin (needs credentials)
 ```
+# on JSweet's repository
 gradlew publish
-```
 
+# on central Gradle plugins repository
+gradlew publishPlugins
+```
