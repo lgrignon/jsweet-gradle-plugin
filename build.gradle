@@ -5,6 +5,7 @@ apply plugin: 'groovy'
 apply plugin: 'maven'
 apply plugin: 'maven-publish'
 apply plugin: 'maven-publish-auth'
+apply plugin: "com.gradle.plugin-publish"
 
 group = 'org.jsweet'
 version = '2.0.0-rc1'
@@ -19,15 +20,20 @@ buildscript {
 	dependencies {
 		classpath 'org.hibernate.build.gradle:gradle-maven-publish-auth:2.0.1'
 		classpath 'junit:junit:4.12'
+		classpath "com.gradle.publish:plugin-publish-plugin:0.9.7"
 	}
 	repositories {
 		maven { url "http://repository.jboss.org/nexus/content/groups/public/" }
 		mavenLocal()
 		mavenCentral()
+		maven {
+			url "https://plugins.gradle.org/m2/"
+		}
 	}
 }
 
 repositories {
+	jcenter()
 	mavenCentral()
 
 	maven { url "http://repository.jsweet.org/artifactory/libs-release-local" }
@@ -73,6 +79,21 @@ publishing {
 		}
 	}
 }
+
+pluginBundle {
+  website = 'http://www.jsweet.org/'
+  vcsUrl = 'https://github.com/cincheo/jsweet'
+  description = 'JSweet Gradle plugin'
+  tags = ['jsweet', 'transpiler', 'java', 'web', 'typescript', 'typescript', 'gradle']
+
+  plugins {
+    jsweetPlugin {
+      id = 'org.jsweet.jsweet-gradle-plugin'
+      displayName = 'JSweet Gradle plugin'
+    }
+  }
+}
+
 task wrapper(type: Wrapper) {
 	gradleVersion = '3.3'
 }
