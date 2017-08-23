@@ -55,6 +55,8 @@ jsweet {
 	candiesJsOut = new File('target/candies')
 	targetVersion = 'ES3'
 	includes = ['**/fr/test/my/**/*.java']
+	
+	// extraSystemPath = '/my/path/to/npm'
 }
 
 ```

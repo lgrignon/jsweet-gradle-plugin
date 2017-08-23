@@ -211,6 +211,14 @@ public class JSweetPluginExtension {
 		this.header = header;
 	}
 
+	public String getExtraSystemPath() {
+		return extraSystemPath;
+	}
+
+	public void setExtraSystemPath(String extraSystemPath) {
+		this.extraSystemPath = extraSystemPath;
+	}
+
 	private EcmaScriptComplianceLevel targetVersion = EcmaScriptComplianceLevel.ES3;
 	private ModuleKind module = ModuleKind.none;
 	private File outDir;
@@ -238,6 +246,8 @@ public class JSweetPluginExtension {
 	private boolean definitions = true;
 	private boolean disableSinglePrecisionFloats = false;
 	private String factoryClassName;
+
+	private String extraSystemPath;
 
 	protected boolean ignoreTypeScriptErrors;
 	protected File header;

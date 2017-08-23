@@ -15,6 +15,8 @@
  */
 package org.jsweet.gradle;
 
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
+
 import java.io.File;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -35,6 +37,7 @@ import org.jsweet.transpiler.JSweetTranspiler;
 import org.jsweet.transpiler.SourceFile;
 import org.jsweet.transpiler.util.ConsoleTranspilationHandler;
 import org.jsweet.transpiler.util.ErrorCountTranspilationHandler;
+import org.jsweet.transpiler.util.ProcessUtil;
 
 /**
  * JSweet transpilation task
@@ -81,6 +84,11 @@ public class JSweetTranspileTask extends AbstractJSweetTask {
 				new ConsoleTranspilationHandler());
 		try {
 
+			logInfo("extraSystemPath: " + configuration.getExtraSystemPath());
+			if (isNotBlank(configuration.getExtraSystemPath())) {
+				ProcessUtil.addExtraPath(configuration.getExtraSystemPath());
+			}
+			
 			logInfo("encoding: " + configuration.getEncoding());
 			logInfo("classpath: " + classpath.getFiles());
 			logInfo("ts output dir: " + tsOutputDir);
