@@ -47,11 +47,6 @@ import org.jsweet.transpiler.util.ProcessUtil;
  */
 public class JSweetTranspileTask extends AbstractJSweetTask {
 
-	public JSweetTranspileTask() {
-		dependsOn(JavaPlugin.CLASSES_TASK_NAME);
-		setGroup("generate");
-	}
-
 	private SourceDirectorySet sources;
 	private FileCollection classpath;
 
