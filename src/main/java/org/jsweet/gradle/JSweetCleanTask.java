@@ -18,8 +18,6 @@ package org.jsweet.gradle;
 import java.io.File;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Level;
-import org.apache.log4j.LogManager;
 import org.gradle.api.tasks.TaskAction;
 
 /**
@@ -37,9 +35,7 @@ public class JSweetCleanTask extends AbstractJSweetTask {
 	
 	@TaskAction
 	protected void clean() {
-		if (configuration.isVerbose()) {
-			LogManager.getLogger("org.jsweet").setLevel(Level.ALL);
-		}
+		configureLogging();
 
 		File tsOutputDir = configuration.getTsOut();
 		if (tsOutputDir != null) {

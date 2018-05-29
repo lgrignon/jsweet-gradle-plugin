@@ -8,7 +8,7 @@ apply plugin: 'maven-publish-auth'
 apply plugin: "com.gradle.plugin-publish"
 
 group = 'org.jsweet'
-version = '2.0.0-SNAPSHOT'
+version = '2.2.0-SNAPSHOT'
 description = 'JSweet Gradle plugin'
 
 sourceCompatibility = 1.8
@@ -45,8 +45,8 @@ dependencies {
 	compile gradleApi()
 	compile localGroovy()
 
-	compile group: 'org.jsweet', name: 'jsweet-transpiler', version:'2.0.0-SNAPSHOT'
-	compile group: 'org.jsweet', name: 'jsweet-core', version:'5-20170726'
+	compile group: 'org.jsweet', name: 'jsweet-transpiler', version:'2.2.0-SNAPSHOT'
+	compile group: 'org.jsweet', name: 'jsweet-core', version:'6-SNAPSHOT'
 	compile group: 'org.codehaus.plexus', name: 'plexus-utils', version:'3.0.20'
 }
 
@@ -95,5 +95,5 @@ pluginBundle {
 }
 
 task wrapper(type: Wrapper) {
-	gradleVersion = '3.3'
+	gradleVersion = '3.5'
 }

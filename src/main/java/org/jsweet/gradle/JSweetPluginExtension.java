@@ -59,11 +59,11 @@ public class JSweetPluginExtension {
 		this.tsOut = tsOut;
 	}
 
-	public boolean isTsOnly() {
+	public Boolean isTsOnly() {
 		return tsOnly;
 	}
 
-	public void setTsOnly(boolean tsOnly) {
+	public void setTsOnly(Boolean tsOnly) {
 		this.tsOnly = tsOnly;
 	}
 
@@ -83,19 +83,19 @@ public class JSweetPluginExtension {
 		this.excludes = excludes;
 	}
 
-	public boolean isBundle() {
+	public Boolean isBundle() {
 		return bundle;
 	}
 
-	public void setBundle(boolean bundle) {
+	public void setBundle(Boolean bundle) {
 		this.bundle = bundle;
 	}
 
-	public boolean isSourceMap() {
+	public Boolean isSourceMap() {
 		return sourceMap;
 	}
 
-	public void setSourceMap(boolean sourceMaps) {
+	public void setSourceMap(Boolean sourceMaps) {
 		this.sourceMap = sourceMaps;
 	}
 
@@ -115,27 +115,27 @@ public class JSweetPluginExtension {
 		this.encoding = encoding;
 	}
 
-	public boolean isNoRootDirectories() {
+	public Boolean isNoRootDirectories() {
 		return noRootDirectories;
 	}
 
-	public void setNoRootDirectories(boolean noRootDirectories) {
+	public void setNoRootDirectories(Boolean noRootDirectories) {
 		this.noRootDirectories = noRootDirectories;
 	}
 
-	public boolean isEnableAssertions() {
+	public Boolean isEnableAssertions() {
 		return enableAssertions;
 	}
 
-	public void setEnableAssertions(boolean enableAssertions) {
+	public void setEnableAssertions(Boolean enableAssertions) {
 		this.enableAssertions = enableAssertions;
 	}
 
-	public boolean isVerbose() {
+	public Boolean isVerbose() {
 		return verbose;
 	}
 
-	public void setVerbose(boolean verbose) {
+	public void setVerbose(Boolean verbose) {
 		this.verbose = verbose;
 	}
 
@@ -147,11 +147,11 @@ public class JSweetPluginExtension {
 		this.jdkHome = jdkHome;
 	}
 
-	public boolean isDeclaration() {
+	public Boolean isDeclaration() {
 		return declaration;
 	}
 
-	public void setDeclaration(boolean declaration) {
+	public void setDeclaration(Boolean declaration) {
 		this.declaration = declaration;
 	}
 
@@ -171,19 +171,19 @@ public class JSweetPluginExtension {
 		this.candiesJsOut = candiesJsOut;
 	}
 
-	public boolean isDefinitions() {
+	public Boolean isDefinitions() {
 		return definitions;
 	}
 
-	public void setDefinitions(boolean definitions) {
+	public void setDefinitions(Boolean definitions) {
 		this.definitions = definitions;
 	}
 
-	public boolean isDisableSinglePrecisionFloats() {
+	public Boolean isDisableSinglePrecisionFloats() {
 		return disableSinglePrecisionFloats;
 	}
 
-	public void setDisableSinglePrecisionFloats(boolean disableSinglePrecisionFloats) {
+	public void setDisableSinglePrecisionFloats(Boolean disableSinglePrecisionFloats) {
 		this.disableSinglePrecisionFloats = disableSinglePrecisionFloats;
 	}
 
@@ -195,11 +195,11 @@ public class JSweetPluginExtension {
 		this.factoryClassName = factoryClassName;
 	}
 
-	public boolean isIgnoreTypeScriptErrors() {
+	public Boolean isIgnoreTypeScriptErrors() {
 		return ignoreTypeScriptErrors;
 	}
 
-	public void setIgnoreTypeScriptErrors(boolean ignoreTypeScriptErrors) {
+	public void setIgnoreTypeScriptErrors(Boolean ignoreTypeScriptErrors) {
 		this.ignoreTypeScriptErrors = ignoreTypeScriptErrors;
 	}
 
@@ -219,36 +219,65 @@ public class JSweetPluginExtension {
 		this.extraSystemPath = extraSystemPath;
 	}
 
+	public Boolean isTsserver() {
+		return tsserver;
+	}
+
+	public void setTsserver(Boolean tsserver) {
+		this.tsserver = tsserver;
+	}
+
+	public Boolean isVeryVerbose() {
+		return veryVerbose;
+	}
+
+	public void setVeryVerbose(Boolean veryVerbose) {
+		this.veryVerbose = veryVerbose;
+	}
+	
+	public File getWorkingDir() {
+		return workingDir;
+	}
+
+	public void setWorkingDir(File workingDir) {
+		this.workingDir = workingDir;
+	}
+
 	private EcmaScriptComplianceLevel targetVersion = EcmaScriptComplianceLevel.ES3;
 	private ModuleKind module = ModuleKind.none;
 	private File outDir;
 	private File tsOut;
-	private boolean tsOnly = false;
+	private Boolean tsOnly = false;
 	private String[] includes = null;
 	private String[] excludes = null;
-	private boolean bundle = false;
+	private Boolean bundle = false;
 
-	private boolean sourceMap = false;
+	private Boolean sourceMap = false;
 	private File sourceRoot = null;
 	private String encoding = "UTF-8";
 
-	private boolean noRootDirectories = false;
+	private Boolean noRootDirectories = false;
 
-	private boolean enableAssertions = false;
+	private Boolean enableAssertions = false;
 
-	private boolean verbose = false;
+	private Boolean verbose = false;
 
 	private File jdkHome = null;
 
-	private boolean declaration;
+	private Boolean declaration;
 	private File dtsOut;
 	private File candiesJsOut;
-	private boolean definitions = true;
-	private boolean disableSinglePrecisionFloats = false;
+	private Boolean definitions = true;
+	private Boolean disableSinglePrecisionFloats = false;
 	private String factoryClassName;
 
 	private String extraSystemPath;
 
-	protected boolean ignoreTypeScriptErrors;
+	protected Boolean ignoreTypeScriptErrors;
 	protected File header;
+
+	protected File workingDir;
+	
+	private Boolean tsserver;
+	private Boolean veryVerbose;
 }

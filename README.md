@@ -75,6 +75,13 @@ $ gradle jsweet
 $ gradle jsweetClean
 ```
 
+## Development / Contribution
+
+Install with:
+```
+gradlew clean publishToMavenLocal
+```
+
 ## Deploy the plugin (needs credentials)
 ```
 # on JSweet's repository

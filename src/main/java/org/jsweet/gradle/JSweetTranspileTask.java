@@ -23,12 +23,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.log4j.Level;
-import org.apache.log4j.LogManager;
 import org.codehaus.plexus.util.DirectoryScanner;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
-import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.TaskAction;
 import org.jsweet.JSweetConfig;
 import org.jsweet.transpiler.JSweetFactory;
@@ -52,9 +49,7 @@ public class JSweetTranspileTask extends AbstractJSweetTask {
 
 	@TaskAction
 	protected void transpile() {
-		if (configuration.isVerbose()) {
-			LogManager.getLogger("org.jsweet").setLevel(Level.ALL);
-		}
+		configureLogging();
 
 		File jdkHome = configuration.getJdkHome();
 		if (jdkHome == null) {
@@ -64,16 +59,14 @@ public class JSweetTranspileTask extends AbstractJSweetTask {
 		JSweetConfig.initClassPath(jdkHome.getAbsolutePath());
 
 		File tsOutputDir = configuration.getTsOut();
-		if (tsOutputDir == null) {
-			tsOutputDir = new File("target/.ts");
-		}
-		tsOutputDir.mkdirs();
-
 		File jsOutputDir = configuration.getOutDir();
-		if (jsOutputDir == null) {
-			jsOutputDir = new File("target/js");
+
+		File baseDirectory = new File(".").getAbsoluteFile();
+
+		File workingDir = configuration.getWorkingDir();
+		if (workingDir != null && !workingDir.isAbsolute()) {
+			workingDir = new File(baseDirectory, workingDir.getPath());
 		}
-		jsOutputDir.mkdirs();
 
 		ErrorCountTranspilationHandler transpilationHandler = new ErrorCountTranspilationHandler(
 				new ConsoleTranspilationHandler());
@@ -83,7 +76,7 @@ public class JSweetTranspileTask extends AbstractJSweetTask {
 			if (isNotBlank(configuration.getExtraSystemPath())) {
 				ProcessUtil.addExtraPath(configuration.getExtraSystemPath());
 			}
-			
+
 			logInfo("encoding: " + configuration.getEncoding());
 			logInfo("classpath: " + classpath.getFiles());
 			logInfo("ts output dir: " + tsOutputDir);
@@ -114,9 +107,9 @@ public class JSweetTranspileTask extends AbstractJSweetTask {
 						// try forName just in case
 						factory = (JSweetFactory) Class.forName(configuration.getFactoryClassName()).newInstance();
 					} catch (Exception e2) {
-						throw new Exception(
-								"cannot find or instantiate factory class: " + configuration.getFactoryClassName()
-										+ " (make sure the class is in the plugin's classpath and that it defines an empty public constructor)",
+						throw new Exception("cannot find or instantiate factory class: "
+								+ configuration.getFactoryClassName()
+								+ " (make sure the class is in the plugin's classpath and that it defines an empty public constructor)",
 								e2);
 					}
 				}
@@ -127,32 +120,60 @@ public class JSweetTranspileTask extends AbstractJSweetTask {
 
 			SourceFile[] sourceFiles = collectSourceFiles();
 
-			JSweetTranspiler transpiler = new JSweetTranspiler(factory, tsOutputDir, jsOutputDir,
-					configuration.getCandiesJsOut(), classpath.getAsPath());
+			JSweetTranspiler transpiler = new JSweetTranspiler(baseDirectory, null, factory, workingDir, tsOutputDir,
+					jsOutputDir, configuration.getCandiesJsOut(), classpath.getAsPath());
 
 			transpiler.setTscWatchMode(false);
-			transpiler.setEcmaTargetVersion(configuration.getTargetVersion());
-			transpiler.setModuleKind(configuration.getModule());
-			transpiler.setBundle(configuration.isBundle());
-			transpiler.setPreserveSourceLineNumbers(configuration.isSourceMap());
+
+			if (configuration.isTsserver() != null) {
+				transpiler.setUseTsserver(configuration.isTsserver());
+			}
+			if (configuration.getTargetVersion() != null) {
+				transpiler.setEcmaTargetVersion(configuration.getTargetVersion());
+			}
+			if (configuration.getModule() != null) {
+				transpiler.setModuleKind(configuration.getModule());
+			}
+			if (configuration.isBundle() != null) {
+				transpiler.setBundle(configuration.isBundle());
+			}
+			if (configuration.isSourceMap() != null) {
+				transpiler.setGenerateSourceMaps(configuration.isSourceMap());
+			}
 			if (configuration.getSourceRoot() != null) {
 				transpiler.setSourceRoot(configuration.getSourceRoot());
 			}
+			if (configuration.getEncoding() != null) {
+				transpiler.setEncoding(configuration.getEncoding());
+			}
+			if (configuration.isNoRootDirectories() != null) {
+				transpiler.setNoRootDirectories(configuration.isNoRootDirectories());
+			}
+			if (configuration.isEnableAssertions() != null) {
+				transpiler.setIgnoreAssertions(!configuration.isEnableAssertions());
+			}
+			if (configuration.isDeclaration() != null) {
+				transpiler.setGenerateDeclarations(configuration.isDeclaration());
+			}
+			if (configuration.getDtsOut() != null) {
+				transpiler.setDeclarationsOutputDir(configuration.getDtsOut());
+			}
+			if (configuration.isDefinitions() != null) {
+				transpiler.setGenerateDefinitions(configuration.isDefinitions());
+			}
+			if (configuration.isTsOnly() != null) {
+				transpiler.setGenerateJsFiles(!configuration.isTsOnly());
+			}
+			if (configuration.isIgnoreTypeScriptErrors() != null) {
+				transpiler.setIgnoreTypeScriptErrors(configuration.isIgnoreTypeScriptErrors());
+			}
+			if (configuration.getHeader() != null) {
+				transpiler.setHeaderFile(configuration.getHeader());
+			}
+			if (configuration.isDisableSinglePrecisionFloats() != null) {
+				transpiler.setDisableSinglePrecisionFloats(configuration.isDisableSinglePrecisionFloats());
+			}
 
-			transpiler.setEncoding(configuration.getEncoding());
-			transpiler.setNoRootDirectories(configuration.isNoRootDirectories());
-			transpiler.setIgnoreAssertions(!configuration.isEnableAssertions());
-
-			transpiler.setGenerateDeclarations(configuration.isDeclaration());
-			transpiler.setDeclarationsOutputDir(configuration.getDtsOut());
-			transpiler.setGenerateDefinitions(configuration.isDefinitions());
-			
-			transpiler.setGenerateJsFiles(!configuration.isTsOnly());
-			transpiler.setIgnoreTypeScriptErrors(configuration.isIgnoreTypeScriptErrors());
-			transpiler.setHeaderFile(configuration.getHeader());
-
-			transpiler.setDisableSinglePrecisionFloats(configuration.isDisableSinglePrecisionFloats());
-			
 			transpiler.transpile(transpilationHandler, sourceFiles);
 		} catch (NoClassDefFoundError e) {
 			if (configuration.isVerbose()) {

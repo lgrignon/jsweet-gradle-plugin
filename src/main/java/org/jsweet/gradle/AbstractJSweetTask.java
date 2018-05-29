@@ -15,6 +15,8 @@
  */
 package org.jsweet.gradle;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.gradle.api.internal.ConventionTask;
 
@@ -39,8 +41,20 @@ public abstract class AbstractJSweetTask extends ConventionTask {
 	}
 
 	protected void logInfo(String content) {
-		if (configuration.isVerbose()) {
+		if (configuration.isVerbose() != null && configuration.isVerbose() 
+				|| configuration.isVeryVerbose() != null && configuration.isVeryVerbose()) {
 			logger.info(content);
+		}
+	}
+
+	protected void configureLogging() {
+		LogManager.getLogger("org.jsweet").setLevel(Level.WARN);
+
+		if (configuration.isVerbose() != null && configuration.isVerbose()) {
+			LogManager.getLogger("org.jsweet").setLevel(Level.DEBUG);
+		}
+		if (configuration.isVeryVerbose() != null && configuration.isVeryVerbose()) {
+			LogManager.getLogger("org.jsweet").setLevel(Level.ALL);
 		}
 	}
 }
