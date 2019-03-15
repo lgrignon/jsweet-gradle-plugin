@@ -15,7 +15,7 @@ buildscript {
 		maven { url "http://google-diff-match-patch.googlecode.com/svn/trunk/maven" }
 	}
 	dependencies {
-		classpath('org.jsweet:jsweet-gradle-plugin:2.0.0-SNAPSHOT') { //
+		classpath('org.jsweet:jsweet-gradle-plugin:2.3.0-SNAPSHOT') { //
 			transitive = true }
 	}
 }
@@ -37,11 +37,10 @@ Add your JSweet dependencies (candies):
 ```groovy
 
 dependencies {
-    compile group: 'org.jsweet', name: 'jsweet-core', version:'5-SNAPSHOT'
-    compile group: 'org.jsweet.candies.ext', name: 'angular', version:'1.4.0-SNAPSHOT'
-    compile group: 'org.jsweet.candies.ext', name: 'angular-route', version:'1.2.0-SNAPSHOT'
-    compile group: 'org.jsweet.candies.trusted', name: 'es6-promise', version:'0.0.0-SNAPSHOT'
-    compile group: 'org.jsweet', name: 'jsweet-transpiler', version:'2.0.0-SNAPSHOT'
+	compile group: 'org.jsweet', name: 'jsweet-transpiler', version: "2.3.0-SNAPSHOT"
+	compile group: 'org.jsweet', name: 'jsweet-core', version: "6"
+	compile group: 'org.jsweet.candies', name: 'angular', version: "1.4.0-20170726"
+	compile group: 'org.jsweet.candies', name: 'angular-route', version: "1.2.0-20170726"
 }
 ```
 
@@ -53,7 +52,7 @@ jsweet {
 	sourceMap = true
 	outDir = new File('target/javascript')
 	candiesJsOut = new File('target/candies')
-	targetVersion = 'ES3'
+	targetVersion = 'ES6'
 	includes = ['**/fr/test/my/**/*.java']
 	
 	// extraSystemPath = '/my/path/to/npm'
