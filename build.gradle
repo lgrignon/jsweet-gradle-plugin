@@ -8,7 +8,7 @@ apply plugin: 'maven-publish-auth'
 apply plugin: "com.gradle.plugin-publish"
 
 group = 'org.jsweet'
-version = '2.3.5-SNAPSHOT'
+version = '2.3.5'
 description = 'JSweet Gradle plugin'
 
 sourceCompatibility = 1.8
