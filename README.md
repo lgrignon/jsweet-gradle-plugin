@@ -15,7 +15,7 @@ buildscript {
 		maven { url "http://google-diff-match-patch.googlecode.com/svn/trunk/maven" }
 	}
 	dependencies {
-		classpath('org.jsweet:jsweet-gradle-plugin:2.3.0-SNAPSHOT') { //
+		classpath('org.jsweet:jsweet-gradle-plugin:3.0.0') { //
 			transitive = true }
 	}
 }
@@ -37,7 +37,7 @@ Add your JSweet dependencies (candies):
 ```groovy
 
 dependencies {
-	compile group: 'org.jsweet', name: 'jsweet-transpiler', version: "2.3.0-SNAPSHOT"
+	compile group: 'org.jsweet', name: 'jsweet-transpiler', version: "3.0.0"
 	compile group: 'org.jsweet', name: 'jsweet-core', version: "6"
 	compile group: 'org.jsweet.candies', name: 'angular', version: "1.4.0-20170726"
 	compile group: 'org.jsweet.candies', name: 'angular-route', version: "1.2.0-20170726"
@@ -83,6 +83,9 @@ gradlew clean publishToMavenLocal
 
 ## Deploy the plugin (needs credentials)
 ```
+# in local repository
+gradlew publishToMavenLocal
+
 # on JSweet's repository
 gradlew publish
 

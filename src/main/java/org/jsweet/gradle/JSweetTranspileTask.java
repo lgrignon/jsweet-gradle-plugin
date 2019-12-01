@@ -56,8 +56,6 @@ public class JSweetTranspileTask extends AbstractJSweetTask {
 			jdkHome = new File(System.getProperty("java.home"));
 		}
 
-		JSweetConfig.initClassPath(jdkHome.getAbsolutePath());
-
 		File tsOutputDir = configuration.getTsOut();
 		File jsOutputDir = configuration.getOutDir();
 
