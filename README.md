@@ -50,8 +50,8 @@ jsweet {
 	verbose = true
 	encoding = 'UTF-8'
 	sourceMap = true
-	outDir = new File('target/javascript')
-	candiesJsOut = new File('target/candies')
+	outDir = project.file('target/javascript')
+	candiesJsOut = project.file('target/candies')
 	targetVersion = 'ES6'
 	includes = ['**/fr/test/my/**/*.java']
 	
