@@ -11,8 +11,8 @@ group = 'org.jsweet'
 version = '3.0.0-SNAPSHOT'
 description = 'JSweet Gradle plugin'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 1.11
+targetCompatibility = 1.11
 compileJava.options.encoding = 'UTF-8'
 compileTestJava.options.encoding = 'UTF-8'
 
