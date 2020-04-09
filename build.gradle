@@ -1,21 +1,3 @@
-defaultTasks 'clean', 'check', 'assemble'
-
-apply plugin: 'java'
-apply plugin: 'groovy'
-apply plugin: 'maven'
-apply plugin: 'maven-publish'
-apply plugin: 'maven-publish-auth'
-apply plugin: "com.gradle.plugin-publish"
-
-group = 'org.jsweet'
-version = '3.0.0-RC2'
-description = 'JSweet Gradle plugin'
-
-sourceCompatibility = 1.11
-targetCompatibility = 1.11
-compileJava.options.encoding = 'UTF-8'
-compileTestJava.options.encoding = 'UTF-8'
-
 buildscript {
 	dependencies {
 		classpath 'org.hibernate.build.gradle:gradle-maven-publish-auth:2.0.1'
@@ -31,6 +13,27 @@ buildscript {
 		}
 	}
 }
+
+plugins {
+    id 'java'
+    id 'groovy'
+    id 'maven'
+    id 'maven-publish'
+  	id "org.datlowe.maven-publish-auth" version "2.0.2"
+  	id "com.gradle.plugin-publish" version "0.11.0"
+    id 'signing'
+}
+
+defaultTasks 'clean', 'check', 'assemble'
+
+group = 'org.jsweet'
+version = '3.0.0-RC2'
+description = 'JSweet Gradle plugin'
+
+sourceCompatibility = 1.11
+targetCompatibility = 1.11
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
 
 repositories {
 	jcenter()
@@ -78,6 +81,13 @@ publishing {
 		}
 	}
 }
+
+signing {
+    sign publishing.publications.maven
+}
+
+String skipSigning = System.getProperty("skipSigning")
+tasks.withType(Sign)*.enabled = skipSigning == null || !skipSigning.equals("true")
 
 pluginBundle {
   website = 'http://www.jsweet.org/'
