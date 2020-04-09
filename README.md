@@ -4,6 +4,7 @@ Brings the power of JSweet to Gradle
 
 ## Usage
 Add the JSweet's repositories and the Gradle plugin dependency to your project's build.gradle, in the buildScript section:
+
 ```groovy
 buildscript {
 	repositories {
@@ -22,11 +23,13 @@ buildscript {
 ```
 
 Then apply the JSweet Gradle plugin, as usual:
+
 ```groovy
 apply plugin: 'org.jsweet.jsweet-gradle-plugin'
 ```
 
 and optionally  disable java compilation (JSweet sources may not be considered as standard java sources):
+
 ```groovy
 compileJava {
 	enabled = false
@@ -34,6 +37,7 @@ compileJava {
 ```
 
 Add your JSweet dependencies (candies):
+
 ```groovy
 
 dependencies {
@@ -45,6 +49,7 @@ dependencies {
 ```
 
 Configure the JSweet plugin:
+
 ```groovy
 jsweet {
 	verbose = true
@@ -74,15 +79,47 @@ $ gradle jsweet
 $ gradle jsweetClean
 ```
 
-## Development / Contribution
+## Development / Contribution / Deploy
+
+
+### Configure signing
+Add those lines to your `~/.gradle/gradle.properties`:
+
+```properties
+signing.keyId=01695460
+signing.password=...
+signing.secretKeyRingFile=path/to/secrets.gpg
+```
+
+To regenerate this file from the gpg DB, use the following command:
+
+```bash
+gpg --export-secret-keys > path/to/secrets.gpg
+```
+
+To show short key ID (8 chars):
+
+```bash
+gpg --list-keys --keyid-format short
+```
+
+Or you can skip signing with:
+
+```bash
+gradlew ... -DskipSigning=true
+```
+
+### Install
 
 Install with:
-```
+
+```bash
 gradlew clean publishToMavenLocal
 ```
 
-## Deploy the plugin (needs credentials)
-```
+### Deploy (needs credentials)
+
+```bash
 # on JSweet's repository
 gradlew publish
 
