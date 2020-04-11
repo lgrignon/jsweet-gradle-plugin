@@ -27,7 +27,7 @@ plugins {
 defaultTasks 'clean', 'check', 'assemble'
 
 group = 'org.jsweet'
-version = '2.3.6'
+version = '2.3.7-SNAPSHOT'
 description = 'JSweet Gradle plugin'
 
 sourceCompatibility = 1.8
