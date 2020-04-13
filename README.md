@@ -121,8 +121,8 @@ gradlew clean publishToMavenLocal
 
 ```bash
 # on JSweet's repository
-gradlew publish
+gradlew clean publish
 
 # on central Gradle plugins repository
-gradlew publishPlugins
+gradlew clean publishPlugins
 ```
