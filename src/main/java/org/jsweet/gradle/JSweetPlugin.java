@@ -47,6 +47,9 @@ public class JSweetPlugin implements Plugin<Project> {
 		JavaPluginConvention javaPluginConvention = project.getConvention().getPlugin(JavaPluginConvention.class);
 		SourceSetContainer sourceSets = javaPluginConvention.getSourceSets();
 		SourceSet mainSources = sourceSets.getByName(SourceSet.MAIN_SOURCE_SET_NAME);
+		if (sourceSets.getNames().contains("jsweet")) {
+			mainSources = sourceSets.getByName("jsweet");
+		}
 
 		JSweetTranspileTask task = project.getTasks().create("jsweet", JSweetTranspileTask.class);
 		task.setGroup("generate");
