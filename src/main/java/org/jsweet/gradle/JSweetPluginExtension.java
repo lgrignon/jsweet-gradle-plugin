@@ -19,6 +19,7 @@ import java.io.File;
 
 import org.jsweet.transpiler.EcmaScriptComplianceLevel;
 import org.jsweet.transpiler.ModuleKind;
+import org.jsweet.transpiler.ModuleResolution;
 
 /**
  * Plugin's configuration
@@ -36,11 +37,19 @@ public class JSweetPluginExtension {
 	}
 
 	public ModuleKind getModule() {
-		return module;
+	    return module;
+	}
+	
+	public void setModule(ModuleKind module) {
+	    this.module = module;
 	}
 
-	public void setModule(ModuleKind module) {
-		this.module = module;
+	public ModuleResolution getModuleResolution() {
+		return moduleResolution;
+	}
+
+	public void setModuleResolution(ModuleResolution moduleResolution) {
+		this.moduleResolution = moduleResolution;
 	}
 
 	public File getOutDir() {
@@ -245,6 +254,7 @@ public class JSweetPluginExtension {
 
 	private EcmaScriptComplianceLevel targetVersion = EcmaScriptComplianceLevel.ES3;
 	private ModuleKind module = ModuleKind.none;
+	private ModuleResolution moduleResolution;
 	private File outDir;
 	private File tsOut;
 	private Boolean tsOnly = false;

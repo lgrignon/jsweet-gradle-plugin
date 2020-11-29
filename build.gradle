@@ -26,12 +26,12 @@ plugins {
 
 defaultTasks 'clean', 'check', 'assemble'
 
-group = 'org.jsweet'
-version = '2.3.8-SNAPSHOT'
+group = 'org.jsweet.v3'
+version = '3.0.0-RC11'
 description = 'JSweet Gradle plugin'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 1.11
+targetCompatibility = 1.11
 compileJava.options.encoding = 'UTF-8'
 compileTestJava.options.encoding = 'UTF-8'
 
@@ -48,7 +48,7 @@ dependencies {
 	compile gradleApi()
 	compile localGroovy()
 
-	compile group: 'org.jsweet', name: 'jsweet-transpiler', version: project.version
+	compile group: 'org.jsweet.v3', name: 'jsweet-transpiler', version: project.version
 	compile group: 'org.codehaus.plexus', name: 'plexus-utils', version:'3.0.20'
 }
 
@@ -73,7 +73,7 @@ publishing {
 	}
 	publications {
 		maven(MavenPublication) {
-			groupId = 'org.jsweet'
+			groupId = 'org.jsweet.v3'
 			artifactId = 'jsweet-gradle-plugin'
 
 
