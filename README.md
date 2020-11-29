@@ -106,7 +106,7 @@ gpg --list-keys --keyid-format short
 Or you can skip signing with:
 
 ```bash
-gradlew ... -DskipSigning=true
+./gradlew ... -DskipSigning=true
 ```
 
 ### Install
@@ -114,7 +114,7 @@ gradlew ... -DskipSigning=true
 Install with:
 
 ```bash
-gradlew clean publishToMavenLocal
+./gradlew clean publishToMavenLocal
 ```
 
 ### Deploy (needs credentials)
