@@ -45,11 +45,11 @@ repositories {
 
 dependencies {
 
-	compile gradleApi()
-	compile localGroovy()
+	implementation gradleApi()
+	implementation localGroovy()
 
-	compile group: 'org.jsweet', name: 'jsweet-transpiler', version: project.version
-	compile group: 'org.codehaus.plexus', name: 'plexus-utils', version:'3.0.20'
+	implementation group: 'org.jsweet', name: 'jsweet-transpiler', version: project.version
+	implementation group: 'org.codehaus.plexus', name: 'plexus-utils', version:'3.0.20'
 }
 
 task sourceJar(type: Jar) { 
