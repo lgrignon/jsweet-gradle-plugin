@@ -98,11 +98,11 @@ public class JSweetTranspileTask extends AbstractJSweetTask {
             if (configuration.getFactoryClassName() != null) {
                 try {
                     factory = (JSweetFactory) Thread.currentThread().getContextClassLoader()
-                            .loadClass(configuration.getFactoryClassName()).newInstance();
+                            .loadClass(configuration.getFactoryClassName()).getDeclaredConstructor().newInstance();
                 } catch (Exception e) {
                     try {
                         // try forName just in case
-                        factory = (JSweetFactory) Class.forName(configuration.getFactoryClassName()).newInstance();
+                        factory = (JSweetFactory) Class.forName(configuration.getFactoryClassName()).getDeclaredConstructor().newInstance();
                     } catch (Exception e2) {
                         throw new Exception("cannot find or instantiate factory class: "
                                 + configuration.getFactoryClassName()
