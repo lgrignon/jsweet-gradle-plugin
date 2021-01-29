@@ -1,0 +1,47 @@
+buildscript {
+	repositories {
+		jcenter()
+		mavenCentral()
+		gradlePluginPortal()
+	}
+	dependencies {
+		repositories { flatDir name: 'jsweet-gradle-plugin', dirs: "$rootProject.buildDir/libs" }
+	}
+}
+
+plugins { 
+	id 'java-library'
+	id 'org.jsweet.jsweet-gradle-plugin'
+}
+
+group 'my.sample'
+version '1.0'
+
+
+	repositories {
+		mavenLocal()
+		jcenter()
+		maven { url "http://repository.jsweet.org/artifactory/libs-snapshot-local" }
+		maven { url "http://repository.jsweet.org/artifactory/libs-release-local" }
+		maven { url "http://repository.jsweet.org/artifactory/plugins-snapshot-local" }
+		maven { url "http://repository.jsweet.org/artifactory/plugins-release-local" }
+		maven { url "http://google-diff-match-patch.googlecode.com/svn/trunk/maven" }
+	}
+
+	sourceCompatibility = 11
+	targetCompatibility = 11
+
+jsweet {
+	verbose = true
+	encoding = 'UTF-8'
+	sourceMap = true
+	dtsOut = project.file('target/andven2')
+	outDir = project.file('target/javascript')
+	candiesJsOut = project.file('target/candies')
+	targetVersion = 'ES6'
+	includes = ['**/src/**/*.java']
+	
+	// extraSystemPath = '/my/path/to/npm'
+}
+
+//task snapshot(type: it.smi.gradle_snapshot.SmiSnapshotTask) {}

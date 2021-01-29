@@ -37,11 +37,11 @@ public class JSweetPluginExtension {
 	}
 
 	public ModuleKind getModule() {
-	    return module;
+		return module;
 	}
-	
+
 	public void setModule(ModuleKind module) {
-	    this.module = module;
+		this.module = module;
 	}
 
 	public ModuleResolution getModuleResolution() {
@@ -56,6 +56,11 @@ public class JSweetPluginExtension {
 		return outDir;
 	}
 
+	/**
+	 * 
+	 * @param outDir
+	 *            the directory where JavaScript files are written
+	 */
 	public void setOutDir(File outDir) {
 		this.outDir = outDir;
 	}
@@ -212,6 +217,22 @@ public class JSweetPluginExtension {
 		this.ignoreTypeScriptErrors = ignoreTypeScriptErrors;
 	}
 
+	public Boolean isIgnoreJavaFileNameError() {
+		return ignoreJavaFileNameError;
+	}
+
+	public void setIgnoreJavaFileNameError(Boolean ignoreJavaFileNameError) {
+		this.ignoreJavaFileNameError = ignoreJavaFileNameError;
+	}
+
+	public Boolean isTscWatchMode() {
+		return tscWatchMode;
+	}
+
+	public void setTscWatchMode(Boolean tscWatchMode) {
+		this.tscWatchMode = tscWatchMode;
+	}
+
 	public File getHeader() {
 		return header;
 	}
@@ -243,7 +264,7 @@ public class JSweetPluginExtension {
 	public void setVeryVerbose(Boolean veryVerbose) {
 		this.veryVerbose = veryVerbose;
 	}
-	
+
 	public File getWorkingDir() {
 		return workingDir;
 	}
@@ -287,7 +308,9 @@ public class JSweetPluginExtension {
 	protected File header;
 
 	protected File workingDir;
-	
+
 	private Boolean tsserver;
 	private Boolean veryVerbose;
+	private Boolean ignoreJavaFileNameError;
+	private Boolean tscWatchMode;
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
 	<name>jsweet-gradle-plugin</name>
-	<comment></comment>
+	<comment>JSweet Gradle plugin</comment>
 	<projects>
 	</projects>
 	<buildSpec>

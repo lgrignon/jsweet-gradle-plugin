@@ -19,6 +19,7 @@ import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.gradle.api.internal.ConventionTask;
+import org.gradle.api.tasks.Input;
 
 /**
  * Base class for JSweet tasks
@@ -30,8 +31,9 @@ public abstract class AbstractJSweetTask extends ConventionTask {
 
 	protected final Logger logger = Logger.getLogger(getClass());
 
+	@Input
 	protected JSweetPluginExtension configuration;
-	
+
 	public JSweetPluginExtension getConfiguration() {
 		return configuration;
 	}
@@ -41,8 +43,8 @@ public abstract class AbstractJSweetTask extends ConventionTask {
 	}
 
 	protected void logInfo(String content) {
-		if (configuration.isVerbose() != null && configuration.isVerbose() 
-				|| configuration.isVeryVerbose() != null && configuration.isVeryVerbose()) {
+		if (configuration.isVerbose() != null && configuration.isVerbose() || configuration.isVeryVerbose() != null
+				&& configuration.isVeryVerbose()) {
 			logger.info(content);
 		}
 	}
