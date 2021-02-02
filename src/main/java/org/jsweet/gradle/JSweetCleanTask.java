@@ -32,7 +32,7 @@ public class JSweetCleanTask extends AbstractJSweetTask {
 		logInfo("cleaning: " + directory);
 		FileUtils.deleteQuietly(directory);
 	}
-	
+
 	@TaskAction
 	protected void clean() {
 		configureLogging();
@@ -55,7 +55,7 @@ public class JSweetCleanTask extends AbstractJSweetTask {
 		}
 
 		clean(new File(".jsweet"));
-		
+
 		logInfo("clean end");
 	}
 }

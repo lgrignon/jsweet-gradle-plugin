@@ -57,7 +57,7 @@ public class JSweetPlugin implements Plugin<Project> {
 		task.setConfiguration(extension);
 		task.setSources(mainSources.getAllJava());
 		task.setClasspath(mainSources.getCompileClasspath());
-		
+
 		JSweetCleanTask cleanTask = project.getTasks().create("jsweetClean", JSweetCleanTask.class);
 		cleanTask.setConfiguration(extension);
 	}

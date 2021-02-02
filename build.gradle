@@ -1,8 +1,7 @@
 buildscript {
 	dependencies {
 		classpath 'org.hibernate.build.gradle:gradle-maven-publish-auth:2.0.1'
-		classpath 'junit:junit:4.12'
-		classpath "com.gradle.publish:plugin-publish-plugin:0.9.7"
+		classpath "com.gradle.publish:plugin-publish-plugin:0.12.0"
 	}
 	repositories {
 		maven { url "http://repository.jboss.org/nexus/content/groups/public/" }
@@ -15,13 +14,14 @@ buildscript {
 }
 
 plugins {
-    id 'java'
+    id 'java-gradle-plugin'
     id 'groovy'
     id 'maven'
     id 'maven-publish'
   	id "org.datlowe.maven-publish-auth" version "2.0.2"
-  	id "com.gradle.plugin-publish" version "0.11.0"
+  	id "com.gradle.plugin-publish" version "0.12.0"
     id 'signing'
+    id 'eclipse'
 }
 
 defaultTasks 'clean', 'check', 'assemble'
@@ -49,7 +49,22 @@ dependencies {
 	implementation localGroovy()
 
 	implementation group: 'org.jsweet', name: 'jsweet-transpiler', version: project.version
-	implementation group: 'org.codehaus.plexus', name: 'plexus-utils', version:'3.0.20'
+	implementation group: 'org.codehaus.plexus', name: 'plexus-utils', version:'3.3.0'
+
+	// test kit
+	testImplementation gradleTestKit()
+	
+	testImplementation "org.junit.jupiter:junit-jupiter-api:5.7.0"
+	testImplementation "org.junit.jupiter:junit-jupiter-params:5.7.0"
+	
+	testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.7.0"
+	testRuntimeOnly  "org.junit.platform:junit-platform-launcher:1.7.0"
+		
+}
+
+test {
+	useJUnitPlatform()
+	testLogging.showStandardStreams = false
 }
 
 task sourceJar(type: Jar) { 
@@ -122,11 +137,60 @@ pluginBundle {
   vcsUrl = 'https://github.com/cincheo/jsweet'
   description = 'JSweet Gradle plugin'
   tags = ['jsweet', 'transpiler', 'java', 'web', 'typescript', 'typescript', 'gradle']
+}
 
-  plugins {
-    jsweetPlugin {
-      id = 'org.jsweet.jsweet-gradle-plugin'
-      displayName = 'JSweet Gradle plugin'
-    }
-  }
+gradlePlugin {
+	// Define the plugin
+	plugins {
+	    jsweetPlugin {
+	      id = 'org.jsweet.jsweet-gradle-plugin'
+	      displayName = 'JSweet Gradle plugin'
+	      implementationClass = 'org.jsweet.gradle.JSweetPlugin'
+	    }
+	}
+}
+
+wrapper {
+	gradleVersion = "6.7.1"
+	distributionType = Wrapper.DistributionType.ALL
+}
+
+// This block is neccessary to get Gradle's source code available when working on this project. This helps the development process tremendously.
+// See: http://stackoverflow.com/questions/22694199/gradle-api-sources-and-doc-when-writing-gradle-plugins/25305938#25305938
+import org.gradle.plugins.ide.eclipse.model.*
+eclipse {
+	classpath {
+		file {
+			whenMerged {Classpath cp ->
+				File gradleHome = gradle.getGradleHomeDir()
+				logger.warn "Using Gradle: ${gradleHome}"
+
+				AbstractLibrary gradleApiLibrary = cp.entries.find { it.path.contains 'gradle-api' }
+				if (gradleApiLibrary != null) {
+					File gradleSrc = new File(gradleHome, 'src')
+					if (!gradleSrc.exists()) {
+						// Eclipse launched gradle with the bin distribution, look for the all distribution.
+						File gradleAll = new File(gradle.getGradleHomeDir().getParentFile().getParentFile().absolutePath.replace('-bin', '-all'))
+						if (gradleAll.exists()) {
+							logger.debug "Found gradle-all: ${gradleAll}"
+							File gradleAllCurrent = gradleAll.listFiles().iterator().next()
+							if (gradleAllCurrent.exists()) {
+								logger.debug "Found gradle-all current: ${gradleAllCurrent}"
+								gradleSrc = new File(gradleAllCurrent, "gradle-${gradle.gradleVersion}/src")
+							}
+						}
+					}
+
+					if (gradleSrc.exists()) {
+						gradleApiLibrary.sourcePath = new org.gradle.plugins.ide.eclipse.model.internal.FileReferenceFactory().fromFile(gradleSrc)
+						logger.warn "Gradle's source found and included from: ${gradleSrc}"
+						logger.debug "Updated library entry: ${gradleApiLibrary}"
+					} else {
+						logger.warn "Gradle's source not included as it was not found at: ${gradleSrc}"
+						logger.warn "Update to the 'all' distribution with:\n> gradlew :wrapper --gradle-version=${gradle.gradleVersion} --distribution-type=all"
+					}
+				}
+			}
+		}
+	}
 }
