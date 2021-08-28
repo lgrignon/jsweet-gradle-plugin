@@ -9,15 +9,16 @@ Add the JSweet's repositories and the Gradle plugin dependency to your project's
 buildscript {
 	repositories {
 		mavenCentral()
-		maven { url "http://repository.jsweet.org/artifactory/libs-release-local" }
-		maven { url "http://repository.jsweet.org/artifactory/libs-snapshot-local" }
-		maven { url "http://repository.jsweet.org/artifactory/plugins-release-local" }
-		maven { url "http://repository.jsweet.org/artifactory/plugins-snapshot-local" }
-		maven { url "http://google-diff-match-patch.googlecode.com/svn/trunk/maven" }
+		maven { url "https://repository.jsweet.org/artifactory/libs-release-local" }
+		maven { url "https://repository.jsweet.org/artifactory/libs-snapshot-local" }
+		maven { url "https://repository.jsweet.org/artifactory/plugins-release-local" }
+		maven { url "https://repository.jsweet.org/artifactory/plugins-snapshot-local" }
+		maven { url "https://google-diff-match-patch.googlecode.com/svn/trunk/maven" }
 	}
 	dependencies {
-		classpath('org.jsweet:jsweet-gradle-plugin:3.0.0') { //
-			transitive = true }
+		classpath('org.jsweet:jsweet-gradle-plugin:3.1.0') {
+			transitive = true 
+		}
 	}
 }
 ```
