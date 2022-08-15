@@ -82,6 +82,63 @@ $ gradle jsweetClean
 
 ## Development / Contribution / Deploy
 
+Make sure your `JAVA_HOME` points to a JDK 11 installation.
+
+Currently, the `check` target seems to be failing, missing some JUnit dependencies.
+
+You can build and assemble the plugin as follows:
+```
+./gradlew clean assemble
+```
+For manual testing with other local Gradle projects using JSweet:
+```
+./gradlew publishToMavenLocal
+```
+You may find you need to set `skipSigning` for this to succeed.
+
+In the client project, add to `settings.gradle`:
+```
+pluginManagement {
+    // includeBuild '../../../Projects/jsweet-gradle-plugin'
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.namespace == 'org.jsweet') {
+                useModule('org.jsweet:jsweet-gradle-plugin:3.1.0')
+            }
+        }
+    }
+    repositories {
+      mavenLocal()
+      gradlePluginPortal()
+    }
+}
+```
+Without the `resolutionStrategy`, Gradle may fail looking for an ID ending in `.gradle.plugin`.
+
+In the client project `build.gradle`, add:
+```
+buildscript {
+	repositories {
+    mavenLocal()
+		mavenCentral()
+		maven { url "https://repository.jsweet.org/artifactory/libs-release-local" }
+		maven { url "https://repository.jsweet.org/artifactory/libs-snapshot-local" }
+		maven { url "https://repository.jsweet.org/artifactory/plugins-release-local" }
+		maven { url "https://repository.jsweet.org/artifactory/plugins-snapshot-local" }
+		maven { url "https://google-diff-match-patch.googlecode.com/svn/trunk/maven" }
+	}
+	dependencies {
+		classpath('org.jsweet:jsweet-gradle-plugin:3.1.0') {
+			transitive = true 
+		}
+	}
+}
+
+plugins {
+    id 'org.jsweet.jsweet-gradle-plugin' version '3.1.0'
+}
+```
+
 
 ### Configure signing
 Add those lines to your `~/.gradle/gradle.properties`:

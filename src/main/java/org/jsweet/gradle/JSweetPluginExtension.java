@@ -273,6 +273,14 @@ public class JSweetPluginExtension {
 		this.workingDir = workingDir;
 	}
 
+	public String getJavaCompilerExtraOptions() {
+		return javaCompilerExtraOptions;
+	}
+
+	public void setJavaCompilerExtraOptions(String javaCompilerExtraOptions) {
+		this.javaCompilerExtraOptions = javaCompilerExtraOptions;
+	}
+
 	private EcmaScriptComplianceLevel targetVersion = EcmaScriptComplianceLevel.ES3;
 	private ModuleKind module = ModuleKind.none;
 	private ModuleResolution moduleResolution;
@@ -313,4 +321,6 @@ public class JSweetPluginExtension {
 	private Boolean veryVerbose;
 	private Boolean ignoreJavaFileNameError;
 	private Boolean tscWatchMode;
+
+	private String javaCompilerExtraOptions;
 }
