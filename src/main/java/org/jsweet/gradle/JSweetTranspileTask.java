@@ -100,6 +100,8 @@ public class JSweetTranspileTask extends AbstractJSweetTask {
 			logInfo("ignoreJavaFileNameError: " + configuration.isIgnoreJavaFileNameError());
 			logInfo("tscWatchMode: " + configuration.isTscWatchMode());
 
+			logInfo("javaCompilerExtraOptions: " + configuration.getJavaCompilerExtraOptions());
+
 			JSweetFactory factory = null;
 			if (configuration.getFactoryClassName() != null) {
 				try {
@@ -185,6 +187,9 @@ public class JSweetTranspileTask extends AbstractJSweetTask {
 				}
 				if (configuration.isTscWatchMode() != null) {
 					transpiler.setTscWatchMode(configuration.isTscWatchMode());
+				}
+				if (configuration.getJavaCompilerExtraOptions() != null) {
+					transpiler.setJavaCompilerExtraOptions(configuration.getJavaCompilerExtraOptions().split(","));
 				}
 
 				transpiler.transpile(transpilationHandler, sourceFiles);

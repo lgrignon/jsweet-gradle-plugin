@@ -5,7 +5,7 @@ buildscript {
 		classpath "com.gradle.publish:plugin-publish-plugin:0.9.7"
 	}
 	repositories {
-		maven { url "http://repository.jboss.org/nexus/content/groups/public/" }
+		maven { url "https://repository.jboss.org/nexus/content/groups/public/" }
 		mavenLocal()
 		mavenCentral()
 		maven {
@@ -17,7 +17,6 @@ buildscript {
 plugins {
     id 'java'
     id 'groovy'
-    id 'maven'
     id 'maven-publish'
   	id "org.datlowe.maven-publish-auth" version "2.0.2"
   	id "com.gradle.plugin-publish" version "0.11.0"
@@ -30,8 +29,8 @@ group = 'org.jsweet'
 version = '3.1.0'
 description = 'JSweet Gradle plugin'
 
-sourceCompatibility = 1.11
-targetCompatibility = 1.11
+sourceCompatibility = 11
+targetCompatibility = 11
 compileJava.options.encoding = 'UTF-8'
 compileTestJava.options.encoding = 'UTF-8'
 
@@ -39,17 +38,17 @@ repositories {
 	jcenter()
 	mavenCentral()
 
-	maven { url "http://repository.jsweet.org/artifactory/libs-release-local" }
-	maven { url "http://repository.jsweet.org/artifactory/libs-snapshot-local" }
+	maven { url "https://repository.jsweet.org/artifactory/libs-release-local" }
+	maven { url "https://repository.jsweet.org/artifactory/libs-snapshot-local" }
 }
 
 dependencies {
 
-	compile gradleApi()
-	compile localGroovy()
+	implementation gradleApi()
+	implementation localGroovy()
 
-	compile group: 'org.jsweet', name: 'jsweet-transpiler', version: project.version
-	compile group: 'org.codehaus.plexus', name: 'plexus-utils', version:'3.0.20'
+	implementation group: 'org.jsweet', name: 'jsweet-transpiler', version: project.version
+	implementation group: 'org.codehaus.plexus', name: 'plexus-utils', version:'3.0.20'
 }
 
 task sourceJar(type: Jar) { 
@@ -59,6 +58,9 @@ task javadocJar(type: Jar) {
     from javadoc
     classifier = 'javadoc'
 }
+
+ext.mavenUser = System.getenv( "GRADLE_MAVEN_USER" )
+ext.mavenPassword = System.getenv( "GRADLE_MAVEN_PASSWORD" )
 
 publishing {
 	repositories {
