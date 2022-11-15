@@ -144,17 +144,22 @@ class JSweetTranspileTaskTestFilters {
 		// IsTestCondition.ts
 		final String expectedConditionTs = Files.readString(outputDir.resolve(TS_GENERATED_FILE));
 		final String actualConditionTs = Files.readString(tsConditionFile.toPath());
-		assertEquals(expectedConditionTs, actualConditionTs);
+		assertStringEquals(expectedConditionTs, actualConditionTs);
 
 		// BooleanCondition.d.ts
 		final String expectedBooleanTs = Files.readString(outputDir.resolve(TS_BOOLEAN_CONDITION_GENERATED_FILE));
 		final String actualBooleanTs = Files.readString(tsBooleanFile.toPath());
-		assertEquals(expectedBooleanTs, actualBooleanTs);
+		assertStringEquals(expectedBooleanTs, actualBooleanTs);
 
 		// ExecutionContext.d.ts
 		final String expectedExecutionTs = Files.readString(outputDir.resolve(TS_EXECUTION_CONTEXT_GENERATED_FILE));
 		final String actualExecutionTs = Files.readString(tsExecutionFile.toPath());
-		assertEquals(expectedExecutionTs, actualExecutionTs);
+		assertStringEquals(expectedExecutionTs, actualExecutionTs);
 	}
 
+	private void assertStringEquals(String expectedConditionTs, String actualConditionTs) {
+		String a = expectedConditionTs.replace("\r\n", "\n");
+		String b = actualConditionTs.replace("\r\n", "\n");
+		assertEquals(a, b);
+	}
 }
