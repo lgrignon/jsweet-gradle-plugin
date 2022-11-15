@@ -281,6 +281,14 @@ public class JSweetPluginExtension {
 		this.javaCompilerExtraOptions = javaCompilerExtraOptions;
 	}
 
+	public Boolean getAutoPropagateAsyncAwaits() {
+		return autoPropagateAsyncAwaits;
+	}
+
+	public void setAutoPropagateAsyncAwaits(Boolean autoPropagateAsyncAwaits) {
+		this.autoPropagateAsyncAwaits = autoPropagateAsyncAwaits;
+	}
+
 	private EcmaScriptComplianceLevel targetVersion = EcmaScriptComplianceLevel.ES3;
 	private ModuleKind module = ModuleKind.none;
 	private ModuleResolution moduleResolution;
@@ -323,4 +331,5 @@ public class JSweetPluginExtension {
 	private Boolean tscWatchMode;
 
 	private String javaCompilerExtraOptions;
+	private Boolean autoPropagateAsyncAwaits;
 }

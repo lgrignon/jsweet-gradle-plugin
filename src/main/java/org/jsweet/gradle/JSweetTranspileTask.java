@@ -101,6 +101,7 @@ public class JSweetTranspileTask extends AbstractJSweetTask {
 			logInfo("tscWatchMode: " + configuration.isTscWatchMode());
 
 			logInfo("javaCompilerExtraOptions: " + configuration.getJavaCompilerExtraOptions());
+			logInfo("autoPropagateAsyncAwaits: " + configuration.getAutoPropagateAsyncAwaits());
 
 			JSweetFactory factory = null;
 			if (configuration.getFactoryClassName() != null) {
@@ -191,7 +192,9 @@ public class JSweetTranspileTask extends AbstractJSweetTask {
 				if (configuration.getJavaCompilerExtraOptions() != null) {
 					transpiler.setJavaCompilerExtraOptions(configuration.getJavaCompilerExtraOptions().split(","));
 				}
-
+				if (configuration.getAutoPropagateAsyncAwaits() != null) {
+					transpiler.setAutoPropagateAsyncAwaits(configuration.getAutoPropagateAsyncAwaits());
+				}
 				transpiler.transpile(transpilationHandler, sourceFiles);
 			}
 		} catch (NoClassDefFoundError e) {
