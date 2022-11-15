@@ -1,4 +1,4 @@
-/* Generated from Java with JSweet 3.1.0-SNAPSHOT - http://www.jsweet.org */
+/* Generated from Java with JSweet 3.2.0-SNAPSHOT - http://www.jsweet.org */
 class IsTestCondition extends BooleanCondition {
     /**
      * 
